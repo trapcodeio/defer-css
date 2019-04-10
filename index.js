@@ -3,24 +3,25 @@
 let deferCssData = {};
 
 /**
- * @param {object[]} links
- * @param {string|object} config
+ * @param {*[]} links
+ * @param {string|object} [mountOn]
  */
-const deferCss = function (links, config) {
+const deferCss = function (links, mountOn) {
     // Setup Config default Values.
-    if (config === undefined) config = 'link';
-    if (typeof config !== "object") config = {mountOn: config};
-    if (typeof config.name === "undefined") config.name = "default";
+    if (mountOn === undefined) mountOn = 'defer-css';
 
-    deferCssData[config.name] = {
+    deferCssData[mountOn] = {
         total: links.length,
         loaded: 0
     };
 
-    links.reverse();
-
     for (let i = 0; i < links.length; i++) {
         let linkData = links[i];
+
+        // if link change to object
+        if (typeof linkData === 'string')
+            linkData = {href: linkData};
+
         let linkDataKeys = Object.keys(linkData);
         let newLink = document.createElement('link');
 
@@ -35,29 +36,29 @@ const deferCss = function (links, config) {
         if (typeof linkData['onload'] === "function") {
             // Load User defined function after incrementing loaded
             newLink.onload = function () {
-                deferCssData[config.name].loaded++;
+                deferCssData[mountOn].loaded++;
                 linkData.onload(linkData)
             }
         } else {
             // Increment loaded after each load
             newLink.onload = function () {
-                deferCssData[config.name].loaded++;
+                deferCssData[mountOn].loaded++;
             }
         }
 
         // Check if mountOn Element Exists
-        let firstLink = document.getElementsByTagName(config.mountOn);
+        let firstLink = document.getElementById(mountOn);
 
-        if (!firstLink.length) {
+        if (firstLink === null) {
             // Log Error if not exists.
-            return console.error('DEFER-CSS: no element <' + config.mountOn + '> found in DOM');
+            return console.error('DEFER-CSS: no link element with id: <' + mountOn + '> found in DOM');
         }
-
-        firstLink = firstLink[0];
-
         // @ts-ignore
         firstLink.parentNode.insertBefore(newLink, firstLink);
     }
+
+    const mountOnElement = document.getElementById(mountOn);
+    if (mountOnElement !== null) mountOnElement.remove();
 };
 
 window['deferCss'] = deferCss;

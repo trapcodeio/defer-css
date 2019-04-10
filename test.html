@@ -4,9 +4,10 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Hello, world!</title>
+    <title>Defer Css Test</title>
+<!--    <script src="https://cdn.jsdelivr.net/npm/defer-css"></script>-->
     <script src="./index.js"></script>
-    <link/>
+    <link id="add-css-here"/>
 </head>
 <body>
 
@@ -27,18 +28,20 @@
 
 <script>
     let scripts = [
-        {href: 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'},
+        'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css',
         // Style with onload
         {
             href: './app.css',
-            onload: (link) => {
-                console.log(link.href + ' Style Loaded!')
+            onload: function () {
+                console.log(this.href + ' Style Loaded!');
+                // value of deferCssData
+                console.log(deferCssData);
             }
         },
     ];
 
     // Defer scripts
-    deferCss(scripts);
+    deferCss(scripts, 'add-css-here');
 </script>
 </body>
 </html>
