@@ -1,0 +1,10 @@
+{
+  "name": "defer-css",
+  "version": "0.0.2",
+  "description": "Load css in your page without affecting load speed.",
+  "main": "index.min.js",
+  "repository": "https://github.com/trapcodeio/defer-css.git",
+  "author": "trapcode",
+  "license": "MIT",
+  "private": false
+}
