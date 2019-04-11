@@ -2,6 +2,8 @@
 
 Simple LightWeight functions to defer css in your web applications or websites.
 
+**DEMO**: [Jsfiddle.net](https://jsfiddle.net/trapcode/j8vsg7az/)
+
 Two **functions** and one **object** is set to global `window`
 
 | Function | Arguments | Usage |
@@ -128,61 +130,4 @@ The `deferCssData` includes details you may need.
         loaded: Number // total number of css loaded (at the moment)
     }
 }
-```
-
-#### Example
-```html
-<!doctype html>
-<html lang="en">
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Defer Css Test</title>
-    <!--    <script src="https://cdn.jsdelivr.net/npm/defer-css"></script>-->
-    <script src="./index.js"></script>
-    <style>
-        /* Show Nothing until bootstrap arrives.*/
-        .empty {
-            display: none;
-        }
-    </style>
-    <link id="add-css-here"/>
-</head>
-<body>
-
-<div class="container empty d-block">
-    <div class="row">
-        <div class="col-md-6 offset-md-3">
-            <div class="card shadow" style="margin-top: 20vh">
-                <div class="card-body text-center">
-                    <h1>Hello, world!</h1>
-                    <h5 class="text-primary">
-                        Bootstrap Loaded with defer-css
-                    </h5>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-    let scripts = [
-        'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css',
-        // Style with onload
-        {
-            href: './app.css',
-            onload: function () {
-                console.log(this.href + ' Style Loaded!');
-                // value of deferCssData
-                console.log(deferCssData);
-            }
-        },
-    ];
-
-    // Defer scripts
-    deferCss(scripts, 'add-css-here');
-</script>
-</body>
-</html>
 ```
