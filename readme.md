@@ -1,6 +1,14 @@
 ### Defer Css
 
-A simple LightWeight function to defer css in your web applications or websites.
+Simple LightWeight functions to defer css in your web applications or websites.
+
+Two **functions** and one **object** is set to global `window`
+
+| Function | Arguments | Usage |
+| --------  |---------  | -----|
+| deferCss | `(scripts=[], mountOnId='defer-css')` | For loading a style or array of styles 
+| hasStyleSheet | `(search='', return=false)` | A bonus helper function for checking if the browser has loaded a particular stylesheet using `document.styleSheets`
+| | | if `$return` is "all" the `CSSStyleSheet` Object is returned, else if any string we assume its a key in the `CSSStyleSheet` object you are trying to get.
 
 #### Direct Browser Installation
 ```html

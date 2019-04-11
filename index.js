@@ -3,14 +3,15 @@
 let deferCssData = {};
 
 /**
- * @param {*[]} links
- * @param {string|object} [mountOn]
+ * @param {*[]|string} links
+ * @param {string|object} [mountOnId]
  */
-const deferCss = function (links, mountOn) {
+const deferCss = function (links, mountOnId) {
     // Setup Config default Values.
-    if (mountOn === undefined) mountOn = 'defer-css';
+    if (mountOnId === undefined) mountOnId = 'defer-css';
+    if(typeof links === 'string') links = [links];
 
-    deferCssData[mountOn] = {
+    deferCssData[mountOnId] = {
         total: links.length,
         loaded: 0
     };
@@ -22,11 +23,30 @@ const deferCss = function (links, mountOn) {
         if (typeof linkData === 'string')
             linkData = {href: linkData};
 
-        let linkDataKeys = Object.keys(linkData);
         let newLink = document.createElement('link');
 
         newLink.rel = 'stylesheet';
 
+        // Functions
+        // Setup Onload Function
+        if (typeof linkData['onload'] === "function") {
+            // Load User defined function after incrementing loaded
+
+            newLink.onload = function () {
+                deferCssData[mountOnId].loaded++;
+                linkData.onload(linkData);
+            };
+        } else {
+            // Increment loaded after each load
+            newLink.onload = function () {
+                deferCssData[mountOnId].loaded++;
+            }
+        }
+
+        const ignoreKeys = ['onload'];
+
+        // Other Properties
+        let linkDataKeys = Object.keys(linkData);
         for (let j = 0; j < linkDataKeys.length; j++) {
             let scriptKey = linkDataKeys[j];
 
@@ -34,40 +54,62 @@ const deferCss = function (links, mountOn) {
             if (scriptKey === 'crossorigin') {
                 newLink['crossOrigin'] = linkData[scriptKey];
             } else {
-                newLink[scriptKey] = linkData[scriptKey];
+                if (!ignoreKeys.includes(scriptKey)) {
+                    newLink[scriptKey] = linkData[scriptKey];
+                }
             }
 
         }
 
-        // Setup Onload Function
-        if (typeof linkData['onload'] === "function") {
-            // Load User defined function after incrementing loaded
-            newLink.onload = function () {
-                deferCssData[mountOn].loaded++;
-                linkData.onload(linkData)
-            }
-        } else {
-            // Increment loaded after each load
-            newLink.onload = function () {
-                deferCssData[mountOn].loaded++;
-            }
-        }
-
-        // Check if mountOn Element Exists
-        let firstLink = document.getElementById(mountOn);
+        // Check if mountOnId Element Exists
+        let firstLink = document.getElementById(mountOnId);
 
         if (firstLink === null) {
             // Log Error if not exists.
-            return console.error('DEFER-CSS: no link element with id: <' + mountOn + '> found in DOM');
+            return console.error('DEFER-CSS: no link element with id: <' + mountOnId + '> found in DOM');
         }
         // @ts-ignore
         firstLink.parentNode.insertBefore(newLink, firstLink);
     }
 
-    const mountOnElement = document.getElementById(mountOn);
-    if (mountOnElement !== null) mountOnElement.remove();
+    const mountOnIdElement = document.getElementById(mountOnId);
+    if (mountOnIdElement !== null) mountOnIdElement.remove();
+};
+
+/**
+ *  Check if style sheet exists in dom.
+ * @param {string} search - string to search
+ * @param {boolean|string} [$return] - What to return (Default: Boolean)
+ */
+const hasStyleSheet = function (search, $return) {
+    if ($return === undefined) $return = false;
+
+    const allStyles = document.styleSheets;
+    for (let i = 0; i < allStyles.length; i++) {
+        let styleSheet = allStyles[i];
+        if (styleSheet.href !== null) {
+            let hasStyle = styleSheet.href.includes(search);
+
+            // if has style and $return is string
+            if (hasStyle && typeof $return === 'string') {
+                // if $return is all we return the CSSStyleSheet Object
+                if ($return === 'all') {
+                    return styleSheet;
+                } else {
+                    // else we assume $return is a key and return that key if exists.
+                    if (typeof styleSheet[$return] !== "undefined")
+                        return styleSheet[$return];
+                }
+            } else {
+                // else we return the results.
+                return hasStyle;
+            }
+        }
+    }
+
+    return false;
 };
 
 window['deferCss'] = deferCss;
 window['deferCssData'] = deferCssData;
-
+window['hasStyleSheet'] = hasStyleSheet;
