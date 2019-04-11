@@ -40,14 +40,32 @@
             href: './app.css',
             onload: function () {
                 console.log(this.href + ' Style Loaded!');
-                // value of deferCssData
-                console.log(deferCssData);
             }
         },
     ];
 
     // Defer scripts
     deferCss(scripts, 'add-css-here');
+
+    // HasStyleSheet Test
+    let counter = 0;
+    let interval = setInterval(function () {
+        // stop if counter reached 100
+        if (interval >= 50) {
+            console.log('We could not get bootstrap check your network.');
+            clearInterval(interval)
+        }
+
+        if (hasStyleSheet('bootstrap')) {
+            console.log('Yes! we now have Bootstrap.');
+            clearInterval(interval);
+        } else {
+            console.log('We don\'t have Bootstrap yet!')
+        }
+
+        counter++;
+
+    }, 100);
 </script>
 </body>
 </html>

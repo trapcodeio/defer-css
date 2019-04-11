@@ -9,7 +9,7 @@ let deferCssData = {};
 const deferCss = function (links, mountOnId) {
     // Setup Config default Values.
     if (mountOnId === undefined) mountOnId = 'defer-css';
-    if(typeof links === 'string') links = [links];
+    if (typeof links === 'string') links = [links];
 
     deferCssData[mountOnId] = {
         total: links.length,
@@ -91,18 +91,20 @@ const hasStyleSheet = function (search, $return) {
             let hasStyle = styleSheet.href.includes(search);
 
             // if has style and $return is string
-            if (hasStyle && typeof $return === 'string') {
-                // if $return is all we return the CSSStyleSheet Object
-                if ($return === 'all') {
-                    return styleSheet;
+            if (hasStyle) {
+                if (typeof $return === 'string') {
+                    // if $return is all we return the CSSStyleSheet Object
+                    if ($return === 'all') {
+                        return styleSheet;
+                    } else {
+                        // else we assume $return is a key and return that key if exists.
+                        if (typeof styleSheet[$return] !== "undefined")
+                            return styleSheet[$return];
+                    }
                 } else {
-                    // else we assume $return is a key and return that key if exists.
-                    if (typeof styleSheet[$return] !== "undefined")
-                        return styleSheet[$return];
+                    // else we return the results.
+                    return hasStyle;
                 }
-            } else {
-                // else we return the results.
-                return hasStyle;
             }
         }
     }
