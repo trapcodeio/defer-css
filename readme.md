@@ -1,6 +1,6 @@
 ### Defer Css
 
-Simple LightWeight functions to defer css in your web applications or websites.
+Simple LightWeight function to defer css in your web applications or websites.
 
 **DEMO**: [Jsfiddle.net](https://jsfiddle.net/trapcode/j8vsg7az/)
 
@@ -8,9 +8,9 @@ Two **functions** and one **object** is set to global `window`
 
 | Function | Arguments | Usage |
 | --------  |---------  | -----|
-| deferCss | `(scripts=[], mountOnId='defer-css')` | For loading a style or array of styles 
-| hasStyleSheet | `(search='', return=false)` | A bonus helper function for checking if the browser has loaded a particular stylesheet using `document.styleSheets`
-| | | if `$return` is "all" the `CSSStyleSheet` Object is returned, else if any string we assume its a key in the `CSSStyleSheet` object you are trying to get.
+| deferCss | `(scripts=[], mountOnId='defer-css')` | For loading a style or array of styles |
+| hasStyleSheet | `(search='', return=false)` | A bonus helper function for checking if the browser has loaded a particular stylesheet using `document.styleSheets` |
+|  |  | if `$return` is "all" the `CSSStyleSheet` Object is returned, else if any string we assume its a key in the `CSSStyleSheet` object you are trying to get. |
 
 #### Direct Browser Installation
 ```html
@@ -24,17 +24,18 @@ Two **functions** and one **object** is set to global `window`
 <script src="https://bundle.run/defer-css"></script>
 ```
 #### From Package Managers
-You can include using `require` or `import` but defer-css does not export anything.
+You can include `defer-css` in your project using `require` or `import` but defer-css does not export anything.
 
-It sets `window.deferCss` && `window.deferCssData`
+It sets `window.deferCss`, `window.deferCssData` && `window.hasStyleSheet`
 
 
 #### Usage
-Defined styles are loaded before the link element with `defer-css` id in your page
+Defined styles are loaded before any element with id `defer-css` id in your page
 ```html
 <html>
     <head>
-        <!-- Styles will be placed before this link element-->
+        <script src="https://cdn.jsdelivr.net/npm/defer-css"></script>
+        <!-- Styles will be placed before this element-->
         <link id="defer-css"/>
     </head>
 </html>
@@ -43,7 +44,7 @@ Defined styles are loaded before the link element with `defer-css` id in your pa
 You can change this to your custom id
 ```html
 <head>
-    <!-- Some Styles    -->
+    <!-- Some Styles  -->
     <link href="....">
     <link href="....">
     <link href="....">
@@ -63,7 +64,7 @@ deferCss([
 
 Adds the following styles
 ```html
-    <link rel="stylesheet" href="style-1.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="style-1.min.css">
     <link rel="stylesheet" href="style-2.min.css" crossorigin="anonymous">
 ```
 
@@ -105,7 +106,6 @@ deferCss([
     'other-css-2.css'
 ], 'other-css');
 ```
-```html
 
 This will result to.
 ```html
@@ -116,7 +116,7 @@ This will result to.
             background: teal;
         }
     </style>
-    <link rel="stylesheet" href="other-css-1.css">
+    <link rel="stylesheet" href="other-css-1.css" crossorigin="anonymous">
     <link rel="stylesheet" href="other-css-2.css">
 ```
 
