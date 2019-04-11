@@ -2,7 +2,7 @@
 
 A simple function to defer css in your html tag.
 
-##### Direct Browser Installation
+#### Direct Browser Installation
 ```html
 <!--Using JsDeliver CDN-->
 <script src="https://cdn.jsdelivr.net/npm/defer-css"></script>
@@ -13,14 +13,14 @@ A simple function to defer css in your html tag.
 <!-- Or Using Bundle.run-->
 <script src="https://bundle.run/defer-css"></script>
 ```
-##### From Package Managers
+#### From Package Managers
 You can include using `require` or `import` but defer-css does not export anything.
 
 It sets `window.deferCss` && `window.deferCssData`
 
 
-##### Usage
-By default defined styles are loaded before the first `<link>` element in your page
+#### Usage
+Defined styles are loaded before the link element with `defer-css` id in your page
 ```html
 <html>
     <head>
@@ -42,11 +42,11 @@ You can change this to your custom id
 </head>
 ```
 
-Load Css
+Load Css using javascript
 ```javascript
 deferCss([
-    {href: 'style-1.min.css', crossorign: 'anonymous'},
-    {href: 'style-2.min.css', crossorign: 'anonymous'}
+    'style-1.min.css',
+    {href: 'style-2.min.css', crossorigin: 'anonymous'}
 ], 'add-css-here')
 ```
 
@@ -56,7 +56,9 @@ Adds the following styles
     <link rel="stylesheet" href="style-2.min.css" crossorigin="anonymous">
 ```
 
-If css object includes an `onload` function, it is executed when the css file is loaded.
+The values of the styles array can either be a url `string` or an `object` that will be used to build your `link` element
+
+If the object includes an `onload` function, it is executed when the css file is loaded.
 ```javascript
 deferCss([
     {
@@ -81,6 +83,7 @@ Lets say you want to mount css in multiple places.
 deferCss(['main-css-1.css', 'main-css-2.css'], 'main-css');
 deferCss(['other-css-1.css', 'other-css-2.css'], 'other-css');
 ```
+
 The `deferCssData` includes details you may need.
 ```javascript
  deferCssData = {
@@ -102,7 +105,7 @@ The `deferCssData` includes details you may need.
     <title>Defer Css Test</title>
     <script src="https://cdn.jsdelivr.net/npm/defer-css"></script>
     <!-- Links are placed before this element -->
-    <add-css-here/>
+    <link id="add-css-here">
 </head>
 <body>
 
@@ -123,7 +126,7 @@ The `deferCssData` includes details you may need.
 
 <script>
     let scripts = [
-        {href: 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'},
+        'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css',
         // Style with onload
         {
             href: './app.css',
