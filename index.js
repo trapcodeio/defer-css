@@ -29,7 +29,14 @@ const deferCss = function (links, mountOn) {
 
         for (let j = 0; j < linkDataKeys.length; j++) {
             let scriptKey = linkDataKeys[j];
-            newLink[scriptKey] = linkData[scriptKey];
+
+            // crossorigin spelt with lowercase helper.
+            if (scriptKey === 'crossorigin') {
+                newLink['crossOrigin'] = linkData[scriptKey];
+            } else {
+                newLink[scriptKey] = linkData[scriptKey];
+            }
+
         }
 
         // Setup Onload Function
@@ -63,3 +70,4 @@ const deferCss = function (links, mountOn) {
 
 window['deferCss'] = deferCss;
 window['deferCssData'] = deferCssData;
+

@@ -1,6 +1,6 @@
 ### Defer Css
 
-A simple function to defer css in your html tag.
+A simple LightWeight function to defer css in your web applications or websites.
 
 #### Direct Browser Installation
 ```html
@@ -33,6 +33,7 @@ Defined styles are loaded before the link element with `defer-css` id in your pa
 You can change this to your custom id
 ```html
 <head>
+    <!-- Some Styles    -->
     <link href="....">
     <link href="....">
     <link href="....">
@@ -74,27 +75,54 @@ deferCss([
 Lets say you want to mount css in multiple places.
 ```html
 <head>
-    <link id="main-css"></main-css>
-    <link id="other-css"></other-css>
+    <link id="main-css">
+    <style>
+        .some-style-before-other-css{
+            background: teal;
+        }
+    </style>
+    <link id="other-css">
 </head>
 ```
 
 ```javascript
 deferCss(['main-css-1.css', 'main-css-2.css'], 'main-css');
-deferCss(['other-css-1.css', 'other-css-2.css'], 'other-css');
+deferCss([
+    {
+        href: 'other-css-1.css',
+        crossorigin: 'anonymous'
+    },
+    'other-css-2.css'
+], 'other-css');
+```
+```html
+
+This will result to.
+```html
+    <link rel="stylesheet" href="main-css-1.css">
+    <link rel="stylesheet" href="main-css-2.css">
+    <style>
+        .some-style-before-other-css{
+            background: teal;
+        }
+    </style>
+    <link rel="stylesheet" href="other-css-1.css">
+    <link rel="stylesheet" href="other-css-2.css">
 ```
 
+#### DeferCssData
 The `deferCssData` includes details you may need.
 ```javascript
- deferCssData = {
-    // Element mounted on, default = 'link'
-    link: {
-        total: 1, // total number of css loaded
-        loaded: 3
+{
+    // Element mounted on, default = 'defer-css'
+    'defer-css': {
+        total: Number, // total number of css defined
+        loaded: Number // total number of css loaded (at the moment)
     }
 }
 ```
-##### Example
+
+#### Example
 ```html
 <!doctype html>
 <html lang="en">
@@ -103,13 +131,19 @@ The `deferCssData` includes details you may need.
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Defer Css Test</title>
-    <script src="https://cdn.jsdelivr.net/npm/defer-css"></script>
-    <!-- Links are placed before this element -->
-    <link id="add-css-here">
+    <!--    <script src="https://cdn.jsdelivr.net/npm/defer-css"></script>-->
+    <script src="./index.js"></script>
+    <style>
+        /* Show Nothing until bootstrap arrives.*/
+        .empty {
+            display: none;
+        }
+    </style>
+    <link id="add-css-here"/>
 </head>
 <body>
 
-<div class="container">
+<div class="container empty d-block">
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <div class="card shadow" style="margin-top: 20vh">

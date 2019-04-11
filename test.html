@@ -5,12 +5,19 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Defer Css Test</title>
+    <!--    <script src="https://cdn.jsdelivr.net/npm/defer-css"></script>-->
     <script src="./index.js"></script>
+    <style>
+        /* Show Nothing until bootstrap arrives.*/
+        .empty {
+            display: none;
+        }
+    </style>
     <link id="add-css-here"/>
 </head>
 <body>
 
-<div class="container">
+<div class="container empty d-block">
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <div class="card shadow" style="margin-top: 20vh">
