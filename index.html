@@ -32,13 +32,13 @@
   </div>
 </div>
 
-<script>
+<script lang="ts">
   let scripts = [
     'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css',
     // Style with onload
     {
       href: './app.css',
-      onload: function () {
+      onDefer: function () {
         console.log(this.href + ' Style Loaded!');
       }
     },

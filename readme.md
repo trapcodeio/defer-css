@@ -6,11 +6,11 @@ Simple LightWeight function to defer css in your web applications or websites.
 
 Two **functions** and one **object** is set to global `window`
 
-| Function | Arguments | Usage |
-| --------  |---------  | -----|
-| deferCss | `(scripts=[], mountOnId='defer-css')` | For loading a style or array of styles |
-| hasStyleSheet | `(search='', return=false)` | A bonus helper function for checking if the browser has loaded a particular stylesheet using `document.styleSheets` |
-|  |  | if `$return` is "all" the `CSSStyleSheet` Object is returned, else if any string we assume its a key in the `CSSStyleSheet` object you are trying to get. |
+| Function      | Arguments                             | Usage                                                                                                                                                     |
+|---------------|---------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| deferCss      | `(scripts=[], mountOnId='defer-css')` | For loading a style or array of styles                                                                                                                    |
+| hasStyleSheet | `(search='', return=false)`           | A bonus helper function for checking if the browser has loaded a particular stylesheet using `document.styleSheets`                                       |
+|               |                                       | if `$return` is "all" the `CSSStyleSheet` Object is returned, else if any string we assume its a key in the `CSSStyleSheet` object you are trying to get. |
 
 #### Direct Browser Installation
 ```html
@@ -19,9 +19,6 @@ Two **functions** and one **object** is set to global `window`
 
 <!-- Or Using UnPkg CDN-->
 <script src="https://unpkg.com/defer-css"></script>
-
-<!-- Or Using Bundle.run-->
-<script src="https://bundle.run/defer-css"></script>
 ```
 #### From Package Managers
 You can include `defer-css` in your project using `require` or `import` but defer-css does not export anything.
@@ -58,7 +55,7 @@ Load Css using javascript
 ```javascript
 deferCss([
     'style-1.min.css',
-    {href: 'style-2.min.css', crossorigin: 'anonymous'}
+    {href: 'style-2.min.css', crossOrigin: 'anonymous'}
 ], 'add-css-here')
 ```
 
@@ -70,12 +67,12 @@ Adds the following styles
 
 The values of the styles array can either be a url `string` or an `object` that will be used to build your `link` element
 
-If the object includes an `onload` function, it is executed when the css file is loaded.
+If the object includes an `onDefer` function, it is executed when the css file is loaded.
 ```javascript
 deferCss([
     {
         href: 'style-1.min.css', 
-        onload: function() {
+        onDefer: function() {
             // do something
         }
     },
@@ -99,10 +96,7 @@ Lets say you want to mount css in multiple places.
 ```javascript
 deferCss(['main-css-1.css', 'main-css-2.css'], 'main-css');
 deferCss([
-    {
-        href: 'other-css-1.css',
-        crossorigin: 'anonymous'
-    },
+    { href: 'other-css-1.css', crossOrigin: 'anonymous' },
     'other-css-2.css'
 ], 'other-css');
 ```
@@ -123,11 +117,11 @@ This will result to.
 #### DeferCssData
 The `deferCssData` includes details you may need.
 ```javascript
-{
-    // Element mounted on, default = 'defer-css'
-    'defer-css': {
-        total: Number, // total number of css defined
-        loaded: Number // total number of css loaded (at the moment)
-    }
-}
+({
+  // Element mounted on, default = 'defer-css'
+  "defer-css": {
+    total: Number, // total number of css defined
+    loaded: Number // total number of css loaded (at the moment)
+  }
+});
 ```
