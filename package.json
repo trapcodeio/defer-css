@@ -2,9 +2,30 @@
   "name": "defer-css",
   "version": "0.0.9",
   "description": "ExtraSlim Javascript to Load css in your page without affecting load speed.",
-  "main": "index.min.js",
   "repository": "https://github.com/trapcodeio/defer-css.git",
   "author": "trapcode",
   "license": "MIT",
-  "private": false
+  "private": false,
+  "type": "module",
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "module": "index.esm.js",
+  "unkpg": "dist/browser.min.js",
+  "jsdelivr": "dist/browser.min.js",
+  "scripts": {
+    "watch": "npx tsc -w",
+    "bundle": "npx tsup"
+  },
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.js"
+    }
+  },
+  "devDependencies": {
+    "prettier": "^2.8.2",
+    "ts-node": "^10.9.1",
+    "tsup": "^6.5.0",
+    "typescript": "^4.9.4"
+  }
 }

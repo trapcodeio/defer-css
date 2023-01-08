@@ -1,0 +1,23 @@
+
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "NodeNext",
+    "declaration": true,
+    "removeComments": false,
+    "isolatedModules": true,
+    "outDir": "./",
+    "strict": true,
+    "moduleResolution": "node16",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+  },
+  "exclude": [
+    "./node_modules",
+    "./build",
+    "package.json"
+  ]
+}
