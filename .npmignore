@@ -1,0 +1,8 @@
+# Created by .ignore support plugin (hsz.mobi)
+yarn-error.log
+.idea
+node_modules
+
+*.ts
+!*.d.ts
+tsup.config.*

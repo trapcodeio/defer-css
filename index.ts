@@ -6,11 +6,37 @@ export interface DeferredLink extends Partial<HTMLLinkElement> {
 export const deferCssData: Record<string, { total: number; loaded: number }> = {};
 const ignoreKeys = ["onDefer"];
 
+/**
+ * Defer Css Function
+ * @param links - Array of links to defer
+ * @param mountOnId - Id of the element to mount the links on
+ *
+ * @example
+ * ```javascript
+ * deferCss(['main-css-1.css', 'main-css-2.css'], 'main-css');
+ * deferCss([
+ *     { href: 'other-css-1.css', crossorigin: 'anonymous'},
+ *     'other-css-2.css'
+ * ], 'other-css');
+ * ```
+ *
+ * This will result to.
+ * ```html
+ * <link rel="stylesheet" href="main-css-1.css">
+ * <link rel="stylesheet" href="main-css-2.css">
+ * <style>
+ *     .some-style-before-other-css{
+ *         background: teal;
+ *     }
+ * </style>
+ * <link rel="stylesheet" href="other-css-1.css" crossorigin="anonymous">
+ * <link rel="stylesheet" href="other-css-2.css">
+ * ```
+ */
 export function deferCss(
     links: string | DeferredLink | (string | DeferredLink)[],
     mountOnId = "defer-css"
 ) {
-    if (mountOnId === void 0) mountOnId = "defer-css";
     if (!Array.isArray(links)) links = [links];
     deferCssData[mountOnId] = { total: links.length, loaded: 0 };
 
@@ -73,14 +99,27 @@ function ___getStyleSheet(
     return false;
 }
 
+/**
+ * hasStyleSheet - Check if a stylesheet is loaded
+ * @param search
+ */
 export function hasStyleSheet(search: string) {
     return ___getStyleSheet(search, false) as boolean;
 }
 
+/**
+ * getStyleSheetProperty - Get a stylesheet property, if not found returns undefined
+ * @param search
+ * @param $return
+ */
 export function getStyleSheetProperty<K extends keyof CSSStyleSheet>(search: string, $return: K) {
     return ___getStyleSheet(search, $return) as CSSStyleSheet[K] | undefined;
 }
 
+/**
+ * getStyleSheet - Get a stylesheet, if not found returns undefined
+ * @param search
+ */
 export function getStyleSheet(search: string) {
     return ___getStyleSheet(search, "stylesheet") as CSSStyleSheet | undefined;
 }
