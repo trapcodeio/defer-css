@@ -9,7 +9,7 @@ const ignoreKeys = ["onDefer"];
 /**
  * Defer Css Function
  * @param links - Array of links to defer
- * @param mountOnId - Id of the element to mount the links on
+ * @param mountId - Id of the element to mount the links on
  *
  * @example
  * ```javascript
@@ -35,10 +35,15 @@ const ignoreKeys = ["onDefer"];
  */
 export function deferCss(
     links: string | DeferredLink | (string | DeferredLink)[],
-    mountOnId = "defer-css"
+    mountId = "defer-css"
 ) {
     if (!Array.isArray(links)) links = [links];
-    deferCssData[mountOnId] = { total: links.length, loaded: 0 };
+
+    if (deferCssData[mountId] === undefined) {
+        deferCssData[mountId] = { total: 0, loaded: 0 };
+    } else {
+        deferCssData[mountId].total += links.length;
+    }
 
     for (const link of links) {
         let linkData = typeof link === "string" ? { href: link } : link;
@@ -47,7 +52,7 @@ export function deferCss(
         newLink.rel = "stylesheet";
 
         newLink.onload = function () {
-            deferCssData[mountOnId].loaded++;
+            deferCssData[mountId].loaded++;
             if (typeof linkData.onDefer === "function") linkData.onDefer(linkData);
         };
 
@@ -62,17 +67,23 @@ export function deferCss(
             }
         }
 
-        let firstLink = document.getElementById(mountOnId);
-        if (firstLink === null) {
+        let firstLink = document.getElementById(mountId);
+        if (firstLink === null || firstLink === undefined) {
             return console.error(
-                "DEFER-CSS: no link element with id: <" + mountOnId + "> found in DOM"
+                "DEFER-CSS: no link element with id: <" + mountId + "> found in DOM"
             );
         }
 
-        firstLink.parentNode!.insertBefore(newLink, firstLink);
+        if (!firstLink.parentNode) {
+            return console.error(
+                "DEFER-CSS: no parent node found for link element with id: <" +
+                    mountId +
+                    "> found in DOM"
+            );
+        }
+
+        firstLink.parentNode.insertBefore(newLink, firstLink);
     }
-    const mountOnIdElement = document.getElementById(mountOnId);
-    if (mountOnIdElement !== null) mountOnIdElement.remove();
 }
 
 function ___getStyleSheet(

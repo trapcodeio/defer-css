@@ -13,7 +13,7 @@
           display: none;
       }
   </style>
-  <link id="add-css-here"/>
+  <link id="add-css-here" />
 </head>
 <body>
 
@@ -32,35 +32,30 @@
   </div>
 </div>
 
-<script lang="ts">
-  let scripts = [
-    'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css',
-    // Style with onload
-    {
-      href: './app.css',
-      onDefer: function () {
-        console.log(this.href + ' Style Loaded!');
-      }
-    },
-  ];
-
+<script>
+  const id = "add-css-here";
   // Defer scripts
-  deferCss(scripts, 'add-css-here');
+  deferCss("https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css", id);
+  deferCss({
+    href: "./app.css", onDefer: function() {
+      console.log(this.href + " Style Loaded!");
+    }
+  }, id);
 
   // HasStyleSheet Test
   let counter = 0;
-  let interval = setInterval(function () {
+  let interval = setInterval(function() {
     // stop if counter reached 100
     if (interval >= 50) {
-      console.log('We could not get bootstrap check your network.');
-      clearInterval(interval)
+      console.log("We could not get bootstrap check your network.");
+      clearInterval(interval);
     }
 
-    if (hasStyleSheet('bootstrap')) {
-      console.log('Yes! we now have Bootstrap.');
+    if (hasStyleSheet("bootstrap")) {
+      console.log("Yes! we now have Bootstrap.");
       clearInterval(interval);
     } else {
-      console.log('We don\'t have Bootstrap yet!')
+      console.log("We don't have Bootstrap yet!");
     }
 
     counter++;
