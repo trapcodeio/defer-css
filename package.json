@@ -15,9 +15,11 @@
   "scripts": {
     "watch": "npx tsc -w",
     "dev": "npx vite",
+    "start": "npm run bb && npm run dev",
     "build": "npx tsc",
     "bundle": "npx tsup",
-    "prepublishOnly": "npm run build && npm run bundle"
+    "bb": "npm run build && npm run bundle",
+    "prepublishOnly": "npm run bb"
   },
   "exports": {
     ".": {
