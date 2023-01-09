@@ -2,6 +2,8 @@
 
 Simple LightWeight function to defer css in your web applications or websites.
 
+**DEMO**: [stackblitz.com](https://stackblitz.com/edit/defer-css-demo?file=index.html)
+
 It's 2023 and there is still a need to defer CSS yourself. One would think that with all the frameworks and libraries
 out there, this would be a solved problem.
 But it's not. This is a simple plugin that will help you defer your CSS.
@@ -22,7 +24,7 @@ With this plugin you can defer these styles and load them when they are needed.
 Yes, you do. Most frameworks have a way to defer CSS, but they are not perfect.
 You don't get to decide when to load the CSS. You can only decide if you want to load it or not in the component.
 
-**DEMO**: [Jsfiddle.net](https://jsfiddle.net/trapcode/j8vsg7az/)
+
 
 ## Direct Browser Installation
 
