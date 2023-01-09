@@ -1,6 +1,6 @@
 {
   "name": "defer-css",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "ExtraSlim Javascript to Load css in your page without affecting load speed.",
   "repository": "https://github.com/trapcodeio/defer-css.git",
   "author": "trapcode",
